@@ -11,7 +11,7 @@ const port = 3000;
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://<your-ip>:3000', // e.g., http://192.168.1.100:3000
     credentials: true
 }));
 app.use(bodyParser.json({ limit: '10mb' }));
@@ -50,7 +50,7 @@ const isAuthenticated = (req, res, next) => {
     if (req.session.user) {
         next();
     } else {
-        res.redirect('/Login/index.html');
+        res.redirect('http://<your-ip>:3000/Login/index.html'); // e.g., http://192.168.1.100:3000/Login/index.html
     }
 };
 
@@ -79,7 +79,7 @@ const validatePassword = (password) => {
 
 // Root route
 app.get('/', (req, res) => {
-    res.redirect('/Login/index.html');
+    res.redirect('http://<your-ip>:3000/Login/index.html'); // e.g., http://192.168.1.100:3000/Login/index.html
 });
 
 // Signup route
@@ -209,7 +209,7 @@ app.post('/api/biometric-auth', (req, res) => {
         req.session.user.biometric_verified = true;
         res.status(200).json({ 
             message: 'Biometric authentication successful',
-            redirect: '/Dashboard/index.html'
+            redirect: 'http://<your-ip>:3000/Dashboard/index.html' // e.g., http://192.168.1.100:3000/Dashboard/index.html
         });
     }, 2000);
 });
@@ -236,12 +236,12 @@ app.post('/api/logout', (req, res) => {
         }
         res.status(200).json({ 
             message: 'Logged out successfully',
-            redirect: '/Login/index.html'
+            redirect: 'http://<your-ip>:3000/Login/index.html' // e.g., http://192.168.1.100:3000/Login/index.html
         });
     });
 });
 
 // Start server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at http://<your-ip>:3000`); // e.g., http://192.168.1.100:3000
 });
